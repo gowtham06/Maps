@@ -12,22 +12,24 @@ router.get('/',function (req,res) {
 });
 
 router.post('/getParkedCars',function (req,res) {
-    console.log(req.body)
+    // console.log("Inside the post request");
+    // console.log(req.body)
 
     var longitude=parseFloat(req.body.longitude);
     var latitude=parseFloat(req.body.latitude);
-    console.log(latitude,longitude);
+    var radius=parseFloat(req.body.radius);
+    // console.log(latitude,longitude,radius);
 // res.json({message:'Got the request with latitude:'+latitude+' and longitude:'+longitude})
 // console.log(latitude);
-    dbConnection.queryCollection(latitude,longitude).then(function (result,error) {
+    dbConnection.queryCollection(latitude,longitude,radius).then(function (result,error) {
             if (result) {
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 res.send(result)
                 exit(`Completed successfully`);
             }
             else{
                 console.log(error)
-                res.send(error);
+                // res.send(error);
                 // throw  error;
 
             }

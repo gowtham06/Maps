@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script>
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 5,
+                center: new google.maps.LatLng(41.8814849854,-81.6396636963),
+                mapTypeId: 'terrain'
+            });
+
+            // Create a <script> tag and set the USGS URL as the source.
+            var script = document.createElement('script');
+            // This example uses a local copy of the GeoJSON stored at
+            // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
+            script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
+
+
+            document.getElementsByTagName('head')[0].appendChild(script);
+        }
+
+        // Loop through the results array and place a marker for each
+        // set of coordinates.
+        window.eqfeed_callback = function(results) {
+            // for (var i = 0; i < results.features.length; i++) {
+            //     var coords = results.features[i].geometry.coordinates;
+            //     var latLng = new google.maps.LatLng(coords[1],coords[0]);
+            //     var marker = new google.maps.Marker({
+            //         position: latLng,
+            //         map: map
+            //     });
+            // }
+            var Data=[{
+                "id": "5d7177a0-fd8b-49ea-afd9-2d2cfbe791ea",
+                "coordinates": [-122.0312186, 37.33233141]
+            }, {
+                "id": "e48b201b-d6e1-41ff-8fb9-d437b1f4ff1d",
+                "coordinates": [-87.6396636963, 41.8814849854]
+            }, {
+                "id": "cc1c744f-d4fe-466d-80c0-30832bdc541c",
+                "coordinates": [-119.170262, 34.144034]
+            }];
+            console.log(Data.length);
+            for(var i=0;i<Data.length;i++){
+                var coords=Data[i].coordinates;
+                var latLng=new google.maps.LatLng(coords[1],coords[0]);
+                var marker=new google.maps.Marker({
+                    position:latLng,
+                    map:map
+                });
+            }
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfAUdXtCyY7x8EFDt2sb7HZ5231AvUPFE&callback=initMap">
+    </script>
+
+</head>
+<body ng-app="">
+<input type="button" value="Show Hide DIV"/>
+<div  ng-show=true id="map"></div>
+</body>
+</html>

@@ -19,7 +19,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfAUdXtCyY7x8EFDt2sb7HZ5231AvUPFE"></script>
     <!-- Modernizr -->
     <!--<script src="../bower_components/modernizr/bin/modernizr"></script>-->
-    <script src="client_components/modernizr/bin/modernizr"></script>
+    <!--<script src="client_components/modernizr/bin/modernizr"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <!-- JS Source -->
     <!--<script src="../bower_components/jquery/jquery.js"></script>-->
     <script src="client_components/jquery/dist/jquery.js"></script>
@@ -29,8 +30,12 @@
     <!--<script src="../bower_components/angular-route/angular-route.js"></script>-->
     <!--<script src="../bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>-->
     <script src="client_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
+    <!-- Angular Scripts-->
+    <script src="javascripts/app.js"></script>
+    <script src="javascripts/addCtrl.js"></script>
+    <script src="javascripts/gservice.js"></script>
 </head>
-<body>
+<body ng-controller="addCtrl">
 <div class="container">
     <div class="header">
         <ul class="nav nav-pills pull-right">
@@ -43,8 +48,11 @@
     <!-- Map and Side Panel -->
     <div class="row content">
         <!-- Google Map -->
+        <!--<div class="col-md-7">-->
+            <!--<div id="map"><img src="images/image.svg"></div>-->
+        <!--</div>-->
         <div class="col-md-7">
-            <div id="map"><img src="holder.js/645x645"></div>
+            <div id="map" style="width: 645px; height: 645px"></div>
         </div>
         <!-- Side Panel -->
         <div class="col-md-5">
@@ -61,18 +69,23 @@
 
                         <div class="form-group">
                             <label for="latitude">Latitude</label>
-                            <input type="text" class="form-control" id="latitude" placeholder="Enter the latitude" ng-model="formData.latitude" readonly>
+                            <input type="text" class="form-control" id="latitude" placeholder="Enter the latitude" ng-model="formData.latitude">
                         </div>
                         <div class="form-group">
                             <label for="longitude">Longitude</label>
-                            <input type="text" class="form-control" id="longitude" placeholder="Enter the longitude" ng-model="formData.longitude" readonly>
+                            <input type="text" class="form-control" id="longitude" placeholder="Enter the longitude" ng-model="formData.longitude">
                         </div>
+                        <div class="form-group">
+                            <label for="radius">Radius</label>
+                            <input type="text" class="form-control" id="radius" placeholder="Enter the radius" ng-model="formData.radius">
+                        </div>
+
                         <!--<div class="form-group">-->
                             <!--<label for="verified">HTML5 Verified Location? <span><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-refresh"></span></button></span></label>-->
                             <!--<input type="text" class="form-control" id="verified" placeholder= "Nope (Thanks for spamming my map...)" ng-model="formData.htmlverified" readonly>-->
                         <!--</div>-->
                         <!--&lt;!&ndash; Submit button. Note that its tied to createUser() function from addCtrl. Also note ng-disabled logic which prevents early submits.  &ndash;&gt;-->
-                        <button type="submit" class="btn btn-danger btn-block" ng-disabled="addForm.$invalid">Submit</button>
+                        <button type="submit" class="btn btn-danger btn-block"  ng-click="findParked()" ng-disabled="addForm.$invalid">Submit</button>
                     </form>
                 </div>
             </div>

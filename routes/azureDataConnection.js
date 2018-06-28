@@ -50,7 +50,7 @@ function getCollection() {
     });
 }
 
-function queryCollection(latitude,longitude) {
+function queryCollection(latitude,longitude,radius) {
     console.log(`Querying collection through index:${config.collection.id}`);
 //     var query_template_front=`select f.id,f.duration,f.endLocation.coordinates
 //             from journey f
@@ -60,8 +60,8 @@ function queryCollection(latitude,longitude) {
 // and f.status="Stay"`
     var query=`select f.id,f.duration,f.endLocation.coordinates
             from journey f
-            where ST_DISTANCE(f.endLocation,{'type':'Point','coordinates':[`+latitude+`,`+longitude+`]})<1000000
-and f.endTimeEpoch>1522253254050
+            where ST_DISTANCE(f.endLocation,{'type':'Point','coordinates':[`+latitude+`,`+longitude+`]})<= `+`1000000`
++` and f.endTimeEpoch>1522253254050
 and f.status="Stay"`
     // var query=query_template_front+latitude+`,`+longitude+query_template_end
     console.log(query);
@@ -81,7 +81,7 @@ and f.status="Stay"`
                 resolve(results);
             }
         });
-    });
+    })
 };
 
 function exit(message) {
