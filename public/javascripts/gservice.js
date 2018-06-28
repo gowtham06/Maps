@@ -1,111 +1,89 @@
 // Google maps Service module
-angular.module('gservice',[])
-    .factory('gservice',function ($http) {
-    var googleMapService={};
-    var locations=[];
+angular.module('gservice', [])
+    .factory('gservice', function($http) {
 
-    var selectedLat=-119.180395633;
-    var selectedLong=34.244498898;
-    var selectRadius=1000000;
+        // Initialize Variables
+        // -------------------------------------------------------------
+        // Service our factory will return
+        var googleMapService = {};
 
-    googleMapService.refresh=function(latitude,longitude,radius) {
-        locations = [];
-        selectedLat = latitude;
-        selectedLong = longitude;
-        selectRadius = radius;
-        var queryData = {
-            latitude: selectedLat,
-            longitude: selectedLong,
-            radius: 1000000
+        // Array of locations obtained from API calls
+        var locations = [];
+
+        // Selected Location (initialize to center of America)
+        var selectedLat = 39.50;
+        var selectedLong = -98.35;
+
+        googleMapService.refresh=function(latitude,longitude){
+            locations=[];
+            selectedLat=latitude;
+            selectedLong=longitude;
+
+            $http.post('/getParkedCars').then(function (response) {
+                locations=convertToMapPoints(response);
+                initialize(latitude,longitude);
+
+            }),function () {
+
+            };
+            };
+
+        var convertToMapPoints=function(response){
+            var locations=[];
+            for(var i=0;i<response.length;i++){
+                var user=response[i];
+                var contentString='<p><b>Username</b>: ' + user.id+
+                    '<br><b>Duration</b>: ' + user.duration +
+                    '</p>';
+                console.log(contentString);
+                locations.push({
+                    latlon:new google.maps.LatLng(user.coordinates[1],user.coordinates[0]),
+                    message:new google.maps.InforWindow({
+                        content:contentString,
+                        maxWidth:320
+                    }),
+                    id:user.id,
+                    duration:user.duration
+                });
+            }
+            return locations;
         };
+    var initialize=function (latitude,longitude) {
+        var myLatLng={lat:selectedLat,lng:selectedLong};
 
-        $http.post('/getParkedCars', queryData).then(function (response) {
-            locations = convertToMapPoints(response);
-
-            initialize(longitude, latitude);
-
-        }),function () {};
-    };
-
-    var convertToMapPoints=function(response){
-        var locations=[];
-        for(var i=0;i<response.length;i++) {
-
-            var user=response[i];
-            console.log(user);
-            var contentString=
-                `<br><b>Id</b>: `+user.id+
-                `<br><b>Duration</b>: `+user.duration+
-                `<br><b>Latitude</b>: `+user.coordinates[1]+
-                `<br><b>Longitude</b>: `+user.coordinates[0]+
-                `</p>`;
-
-            locations.push({
-                latlon:new google.maps.Latlng(user.coordinates[1],user.coordinates[0]),
-                message:new google.maps.InfoWindow({
-                    content:contentString,
-                    maxWidth:320
-                }),
-                id:user.id,
-                duration:user.duration,
-                latitude:user.coordinates[1],
-                longitude:user.coordinates[0]
+        if(!map){
+            var map=new google.maps.Map(document.getElementById('map'),{
+                zoom:3,
+                center:myLatLng
             });
         }
+        locations.forEach(function (n,i) {
 
-        return locations;
-
-
-    };
-                    // Initializes the map
-    var initialize = function(latitude, longitude) {
-
-        // Uses the selected lat, long as starting point
-        var myLatLng = {lat: selectedLat, lng: selectedLong};
-
-        // If map has not been created already...
-        if (!map){
-
-            // Create a new map and place in the index.html page
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 1,
-                center: myLatLng
-            });
-        }
-
-        // Loop through each location in the array and place a marker
-        locations.forEach(function(n, i){
-            var marker = new google.maps.Marker({
-                position: n.latlon,
-                map: map,
-                title: "Big Map",
-                icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            var marker=new google.maps.Marker({
+                position:n.latlon,
+                map:map,
+                title:"Big Map",
+                icon:"http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
             });
 
-            // For each marker created, add a listener that checks for clicks
-            google.maps.event.addListener(marker, 'click', function(e){
-
-                // When clicked, open the selected marker's message
-                currentSelectedMarker = n;
-                n.message.open(map, marker);
+            google.maps.event.addListener(marker,'click',function (e) {
+                currentSelectedMarker=n;
+                n.message.open(map,marker);
             });
         });
+        var initialLocation=new google.maps.LatLng(latitude,longitude);
+        var marker=new google.maps.Marker({
+            position:initialLocation,
+            // animation:google.maps.Animation.Bounce,
+            map:map,
+            icon:'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+        });
+        lastMarker=marker;
 
-            // Set initial location as a bouncing red marker
-            var initialLocation = new google.maps.LatLng(-122.0312186,37.33233141);
-            console.log(initialLocation)
-            var marker = new google.maps.Marker({
-                position: initialLocation,
-                // animation: google.maps.Animation.BOUNCE,
-                map: map,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-            });
-            lastMarker = marker;
+    };
 
-        };
-// Refresh the page upon window load. Use the initial latitude and longitude
-google.maps.event.addDomListener(window, 'load',
-            googleMapService.refresh(selectedLat, selectedLong));
+    google.maps.event.addDomListner(window,'load',googleMapService.refresh(selectedLat,selectedLong));
 
-        return googleMapService;
+    return googleMapService;
+
     });
