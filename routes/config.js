@@ -1,13 +1,13 @@
 var config = {}
 
-config.endpoint = "https://btcmysensecosmosdly.documents.azure.com:443/";
-config.primaryKey = "eLsZ6E7crWAOC8FcK9DnNm8d7NCdlqj7UdeajOm6bKGkXbExztSzlVw06NLXK3mqZ8YlnQ6GyQRjolk3GwRe4w==";
+config.endpoint = "";
+config.primaryKey = "";
 
 config.database = {
-    "id": "mysensedly"
+    "id": ""
 };
 
 config.collection = {
-    "id": "journey"
+    "id": ""
 };
 module.exports = config;
