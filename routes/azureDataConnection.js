@@ -58,11 +58,7 @@ function queryCollection(latitude,longitude,radius) {
 //     var query_template_end=`]})<1000000
 // and f.endTimeEpoch>1522253254050
 // and f.status="Stay"`
-    var query=`select f.id,f.duration,f.endLocation.coordinates
-            from journey f
-            where ST_DISTANCE(f.endLocation,{'type':'Point','coordinates':[`+latitude+`,`+longitude+`]})<= `+`1000000`
-+` and f.endTimeEpoch>1522253254050
-and f.status="Stay"`
+    var query="APPROPRIATE QUERY"
     // var query=query_template_front+latitude+`,`+longitude+query_template_end
     console.log(query);
     return new Promise((resolve, reject) => {
