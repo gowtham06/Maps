@@ -50,6 +50,20 @@
             //         map: map
             //     });
             // }
+            // 41.884117826 -87.64064968460002
+            // gservice.js:73 41.883068298 -87.64160071369997
+            // gservice.js:73 41.8868186447 -87.61667999500003
+            //
+            var Data1=[{
+                "id": "5d7177a0-fd8b-49ea-afd9-2d2cfbe791ea",
+                "coordinates": [41.884117826,-87.64064968460002]
+            }, {
+                "id": "e48b201b-d6e1-41ff-8fb9-d437b1f4ff1d",
+                "coordinates": [41.883068298,-87.64160071369997]
+            }, {
+                "id": "cc1c744f-d4fe-466d-80c0-30832bdc541c",
+                "coordinates": [41.8868186447,-87.61667999500003]
+            }]
             var Data=[{
                 "id": "5d7177a0-fd8b-49ea-afd9-2d2cfbe791ea",
                 "coordinates": [-122.0312186, 37.33233141]
@@ -60,7 +74,7 @@
                 "id": "cc1c744f-d4fe-466d-80c0-30832bdc541c",
                 "coordinates": [-119.170262, 34.144034]
             }];
-            console.log(Data.length);
+            console.log(Data1.length);
             for(var i=0;i<Data.length;i++){
                 var coords=Data[i].coordinates;
                 var latLng=new google.maps.LatLng(coords[1],coords[0]);
