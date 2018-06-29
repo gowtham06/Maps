@@ -52,12 +52,6 @@ function getCollection() {
 
 function queryCollection(latitude,longitude,radius) {
     console.log(`Querying collection through index:${config.collection.id}`);
-//     var query_template_front=`select f.id,f.duration,f.endLocation.coordinates
-//             from journey f
-//             where ST_DISTANCE(f.endLocation,{'type':'Point','coordinates':[`;
-//     var query_template_end=`]})<1000000
-// and f.endTimeEpoch>1522253254050
-// and f.status="Stay"`
     var query="APPROPRIATE QUERY"
     // var query=query_template_front+latitude+`,`+longitude+query_template_end
     console.log(query);
@@ -82,17 +76,7 @@ function queryCollection(latitude,longitude,radius) {
 
 function exit(message) {
     console.log(message);
-    // console.log('Press any key to exit');
-    // process.stdin.resume();
-    // process.stdin.on('data', process.exit.bind(process, 0));
-    //
 }
-// getDatabase()
-//     .then(() => getCollection())
-//     .then(() => queryCollection(-122.0312186,37.33233141))
-//     .then(()  =>{exit(`Completed successfully`);})
-//     .catch((error)=>{exit(`Completed with error ${JSON.stringify(error)}`)});
-
 
 module.exports={
     queryCollection:queryCollection,
