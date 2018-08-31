@@ -24,7 +24,7 @@ router.post('/getParkedCars',function (req,res) {
     var latitude=parseFloat(req.body.latitude);
     var radius=parseFloat(req.body.radius);
     // console.log(radius)
-    console.log(data)
+    // console.log(data)
     res.send(JSON.stringify(data))
     // res.sendFile(path.resolve('routes','data.json'))
 

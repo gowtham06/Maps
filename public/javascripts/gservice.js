@@ -50,8 +50,8 @@ angular.module('gservice', [])
             for(var i=0;i<response.length;i++){
                 var user=response[i];
                 console.log(user)
-                var contentString='<p><b>Username</b>: ' + user.userID+
-                    '<br><b>EndTime</b>: ' + user.endTime +
+                var contentString=
+                    '<p><b>EndTime</b>: ' + user.endTime +
                     '<br><b>Latitude</b>: ' + user.coordinates[1] +
                     '<br><b>Longitude</b>: ' + user.coordinates[0] +
                     '</p>';
