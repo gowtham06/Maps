@@ -11,8 +11,8 @@ angular.module('gservice', [])
         var locations = [];
 
         // Selected Location (initialize to center of America)
-        var selectedLat = 39.50;
-        var selectedLong = -98.35;
+        var selectedLat = -87.6379883;
+        var selectedLong = 41.8810089;
 
         // var selectedLat
 
@@ -43,16 +43,17 @@ angular.module('gservice', [])
         // console.log(selectedLat,selectedLong);
 
         var convertToMapPoints=function(response){
+            console.log(response)
             // console.log(response.data);
-            console.log(response.length);
+            // console.log(response.length);
             var locations=[];
             for(var i=0;i<response.length;i++){
                 var user=response[i];
                 console.log(user)
-                var contentString='<p><b>Username</b>: ' + user.id+
-                    '<br><b>Duration</b>: ' + user.duration +
-                    '<br><b>Latitude</b>: ' + user.coordinates[0] +
-                    '<br><b>Longitude</b>: ' + user.coordinates[1] +
+                var contentString='<p><b>Username</b>: ' + user.userID+
+                    '<br><b>EndTime</b>: ' + user.endTime +
+                    '<br><b>Latitude</b>: ' + user.coordinates[1] +
+                    '<br><b>Longitude</b>: ' + user.coordinates[0] +
                     '</p>';
                 // console.log(contentString);
                 locations.push({

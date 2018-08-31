@@ -51,27 +51,29 @@ function getCollection() {
 }
 
 function queryCollection(latitude,longitude,radius) {
-    console.log(`Querying collection through index:${config.collection.id}`);
-    var query="APPROPRIATE QUERY"
+    // console.log(`Querying collection through index:${config.collection.id}`);
+    var query=""
     // var query=query_template_front+latitude+`,`+longitude+query_template_end
     console.log(query);
-    return new Promise((resolve, reject) => {
-        client.queryDocuments(
-            collectionUrl,
-            query,
-            {enableCrossPartitionQuery: true }
-        ).toArray((err, results) => {
-            if (err) reject(err)
-            else {
-                // for (var queryResult of results) {
-                //     let resultString = JSON.stringify(queryResult);
-                //     console.log(`\tQuery returned ${resultString}`);
-                // }
-                // console.log();
-                resolve(results);
-            }
-        });
-    })
+    // return new Promise((resolve, reject) => {
+    //     client.queryDocuments(
+    //         collectionUrl,
+    //         query,
+    //         {enableCrossPartitionQuery: true }
+    //     ).toArray((err, results) => {
+    //         if (err) reject(err)
+    //         else {
+    //             // for (var queryResult of results) {
+    //             //     let resultString = JSON.stringify(queryResult);
+    //             //     console.log(`\tQuery returned ${resultString}`);
+    //             // }
+    //             // console.log();
+    //             resolve(results);
+    //         }
+    //     });
+    // })
+    //
+
 };
 
 function exit(message) {
